@@ -28,6 +28,7 @@ namespace NeighborGood.API
                                                                  .UseLazyLoadingProxies());
             services.AddScoped<IUserService,UserService>();
             services.AddAutoMapper(typeof(Startup));
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,8 +38,13 @@ namespace NeighborGood.API
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseSwagger();
             app.UseHttpsRedirection();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "NeighborGood API");
+            });
 
             app.UseRouting();
 
