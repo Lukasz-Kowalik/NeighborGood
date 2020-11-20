@@ -8,7 +8,7 @@ namespace NeighborGood.MSSQL
 {
     public class NeighborGoodContext : DbContext
     {
-        DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public NeighborGoodContext(DbContextOptions options) : base(options)
         {

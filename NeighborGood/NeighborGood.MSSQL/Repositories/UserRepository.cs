@@ -1,7 +1,9 @@
-﻿using NeighborGood.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using NeighborGood.Models;
 using NeighborGood.Models.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,9 +11,18 @@ namespace NeighborGood.MSSQL.Repositories
 {
     public class UserRepository : IUserRepository<User>
     {
-        public Task<int> CreateAsync(User entity)
+        protected NeighborGoodContext _dbContect;
+
+        public UserRepository(NeighborGoodContext dbcontext)
         {
-            throw new NotImplementedException();
+            _dbContect = dbcontext;
+        }
+
+        public async Task<int> CreateAsync(User entity)
+        {
+            var created = await _dbContect.Users.AddAsync(entity);
+            await _dbContect.SaveChangesAsync();
+            return created.Entity.Id;
         }
 
         public Task DeleteAsync(User entity)
@@ -24,9 +35,10 @@ namespace NeighborGood.MSSQL.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<User>> GetAllAsync()
+        public async Task<List<User>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var users = await _dbContect.Users.ToListAsync();
+            return users;
         }
 
         public Task<User> GetByIdAsync(int id)

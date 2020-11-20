@@ -18,6 +18,6 @@ namespace NeighborGood.MSSQL.Repositories
 
         Task<T> GetByIdAsync(int id);
 
-        Task<IEnumerable<T>> GetAllAsync();
+        Task<List<T>> GetAllAsync();
     }
 }
