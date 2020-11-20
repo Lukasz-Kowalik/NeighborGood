@@ -6,15 +6,12 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeighborGood.API", "NeighborGood.API\NeighborGood.API.csproj", "{81C0C03A-FE75-4F7B-9931-C94FDE0E8AD5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4562CD2F-6BBC-494D-B56C-6C7061ACF8EF} = {4562CD2F-6BBC-494D-B56C-6C7061ACF8EF}
-		{97378865-FFCF-452F-97B3-63FA5B1A1AA0} = {97378865-FFCF-452F-97B3-63FA5B1A1AA0}
 		{1A8F40EB-7F75-459F-BB1F-E67ED2C3506D} = {1A8F40EB-7F75-459F-BB1F-E67ED2C3506D}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeighborGood.MSSQL", "NeighborGood.MSSQL\NeighborGood.MSSQL.csproj", "{4562CD2F-6BBC-494D-B56C-6C7061ACF8EF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeighborGood.Models", "NeighborGood.Models\NeighborGood.Models.csproj", "{1A8F40EB-7F75-459F-BB1F-E67ED2C3506D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighborGood.Services", "NeighborGood.Services\NeighborGood.Services.csproj", "{97378865-FFCF-452F-97B3-63FA5B1A1AA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,10 +31,6 @@ Global
 		{1A8F40EB-7F75-459F-BB1F-E67ED2C3506D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A8F40EB-7F75-459F-BB1F-E67ED2C3506D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A8F40EB-7F75-459F-BB1F-E67ED2C3506D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97378865-FFCF-452F-97B3-63FA5B1A1AA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97378865-FFCF-452F-97B3-63FA5B1A1AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97378865-FFCF-452F-97B3-63FA5B1A1AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97378865-FFCF-452F-97B3-63FA5B1A1AA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
