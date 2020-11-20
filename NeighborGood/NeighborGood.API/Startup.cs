@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NeighborGood.API.Services;
+using NeighborGood.API.Services.Interfaces;
 using NeighborGood.MSSQL;
 
 namespace NeighborGood.API
@@ -21,10 +23,13 @@ namespace NeighborGood.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+           
             services.AddDbContext<NeighborGoodContext>(opts => opts.UseSqlServer(Configuration["DataBaseConnectionString"])
                                                                  .UseLazyLoadingProxies());
+            services.AddScoped<IUserService,UserService>();
             services.AddAutoMapper(typeof(Startup));
+            services.AddControllers();
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,8 +39,13 @@ namespace NeighborGood.API
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseSwagger();
             app.UseHttpsRedirection();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "NeighborGood API");
+            });
 
             app.UseRouting();
 

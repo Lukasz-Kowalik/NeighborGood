@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NeighborGood.Models;
 using NeighborGood.Models.Entity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NeighborGood.MSSQL.Repositories
@@ -25,12 +22,12 @@ namespace NeighborGood.MSSQL.Repositories
             return created.Entity.Id;
         }
 
-        public Task DeleteAsync(User entity)
+        public async Task DeleteAsync(User entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteByIdAsync(int id)
+        public async Task DeleteByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
@@ -41,12 +38,13 @@ namespace NeighborGood.MSSQL.Repositories
             return users;
         }
 
-        public Task<User> GetByIdAsync(int id)
+        public async Task<User> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var user =await _dbContect.Users.FirstAsync(x=>x.Id==id);
+            return user;
         }
 
-        public Task UpdateAsync(User entity)
+        public async Task UpdateAsync(User entity)
         {
             throw new NotImplementedException();
         }
