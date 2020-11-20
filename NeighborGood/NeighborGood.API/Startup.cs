@@ -23,11 +23,12 @@ namespace NeighborGood.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+           
             services.AddDbContext<NeighborGoodContext>(opts => opts.UseSqlServer(Configuration["DataBaseConnectionString"])
                                                                  .UseLazyLoadingProxies());
             services.AddScoped<IUserService,UserService>();
             services.AddAutoMapper(typeof(Startup));
+            services.AddControllers();
             services.AddSwaggerGen();
         }
 

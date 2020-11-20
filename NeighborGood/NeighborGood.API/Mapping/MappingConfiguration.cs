@@ -8,9 +8,7 @@ namespace NeighborGood.API.Mapping
     {
         public MappingConfiguration(string profileName) : base(profileName)
         {
-            var configuration = new MapperConfiguration(cfg => {
-                cfg.CreateMap<User, UserResponse>();
-            });
+            CreateMap<User, UserResponse>();
         }
     }
 }

@@ -24,8 +24,15 @@ namespace NeighborGood.API.Controllers
         [Route("GetUser/{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
-            var result =await _userService.GetUserById(id);
-            return Ok(result);
+           var result =await _userService.GetUserById(id);
+            return Ok();
+        }
+        [HttpGet]
+        [Route("GetUsers")]
+        public async Task<IActionResult> GetUser()
+        {
+         //  var result = await _userService.GetUserById();
+            return Ok();
         }
     }
 }
