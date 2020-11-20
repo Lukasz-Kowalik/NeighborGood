@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NeighborGood.API.Services;
+using NeighborGood.API.Services.Interfaces;
 using NeighborGood.MSSQL;
 
 namespace NeighborGood.API
@@ -24,6 +26,7 @@ namespace NeighborGood.API
             services.AddControllers();
             services.AddDbContext<NeighborGoodContext>(opts => opts.UseSqlServer(Configuration["DataBaseConnectionString"])
                                                                  .UseLazyLoadingProxies());
+            services.AddScoped<IUserService,UserService>();
             services.AddAutoMapper(typeof(Startup));
         }
 
