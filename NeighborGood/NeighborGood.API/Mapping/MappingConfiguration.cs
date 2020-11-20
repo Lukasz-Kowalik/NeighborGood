@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using NeighborGood.API.DTOs.Responses;
+using NeighborGood.Models.Entity;
 
 namespace NeighborGood.API.Mapping
 {
@@ -6,6 +8,7 @@ namespace NeighborGood.API.Mapping
     {
         public MappingConfiguration(string profileName) : base(profileName)
         {
+            CreateMap<User, UserResponse>();
         }
     }
 }
