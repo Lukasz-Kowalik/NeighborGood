@@ -28,7 +28,6 @@ namespace NeighborGood.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddMediatR(typeof(Startup));
             services.AddAutoMapper(typeof(Startup));
         }
 
