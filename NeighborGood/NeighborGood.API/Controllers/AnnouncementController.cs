@@ -13,34 +13,34 @@ namespace NeighborGood.API.Controllers
     {
         private readonly AnnouncementRepository _repository;
 
-        public AnnouncementController(IAnnouncementRepository<Announcement,AnnouncementFilter> repository)
+        public AnnouncementController(IAnnouncementRepository<UserRegisterRequest,AnnouncementFilter> repository)
         {
             _repository = (AnnouncementRepository)repository;
         }
 
         [HttpGet("filtered")]
-        public async Task<IEnumerable<Announcement>> GetFiltered(AnnouncementFilter filter)
+        public async Task<IEnumerable<UserRegisterRequest>> GetFiltered(AnnouncementFilter filter)
         {
             var announcements = await _repository.GetFilteredAnnouncements(filter);
             return announcements;
         }
 
         [HttpGet("all")]
-        public async Task<IEnumerable<Announcement>> GetAllAnnouncements()
+        public async Task<IEnumerable<UserRegisterRequest>> GetAllAnnouncements()
         {
             var announcements = await _repository.GetAllAsync();
             return announcements;
         }
 
         [HttpGet("{id}")]
-        public async Task<Announcement> GetAnnouncement(int id)
+        public async Task<UserRegisterRequest> GetAnnouncement(int id)
         {
             var announcement = await _repository.GetByIdAsync(id);
             return announcement;
         }
 
         [HttpPost]
-        public async Task<int> CreateAnnouncement(Announcement announcement)
+        public async Task<int> CreateAnnouncement(UserRegisterRequest announcement)
         {
             var id = await _repository.CreateAsync(announcement);
             return id;

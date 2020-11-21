@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -8,13 +9,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NeighborGood.API.Services;
 using NeighborGood.API.Services.Interfaces;
+using NeighborGood.API.Validation;
 using NeighborGood.Models.DTOs.Requests;
 using NeighborGood.Models.Entity;
 using NeighborGood.MSSQL;
 using NeighborGood.MSSQL.Repositories;
-using Newtonsoft;
-using System;
-using System.Text.Json;
 
 namespace NeighborGood.API
 {
@@ -30,10 +29,20 @@ namespace NeighborGood.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CORS",
+                                  builder =>
+                                  {
+                                      builder.AllowAnyOrigin();
+                                      builder.AllowAnyMethod();
+                                      builder.AllowAnyHeader();
+                                  });
+            });
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<GeoLocation>();
-            
-            services.AddDbContext<NeighborGoodContext>(opts => opts.UseSqlServer(Configuration["DataBaseConnectionString"])
+
+            services.AddDbContext<NeighborGoodContext>(opts => opts.UseSqlServer(Configuration["DockerSQLServerConnectionString"])
                                                                  .UseLazyLoadingProxies());
 
             services.AddIdentity<User, Role>()
@@ -60,12 +69,14 @@ namespace NeighborGood.API
             });
 
             services.AddTransient<IUserRepository<User>, UserRepository>();
-            services.AddTransient<IAnnouncementRepository<Announcement,AnnouncementFilter>, AnnouncementRepository>();
+            services.AddTransient<IAnnouncementRepository<UserRegisterRequest, AnnouncementFilter>, AnnouncementRepository>();
 
             services.AddScoped<IUserService, UserService>();
 
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterUserRequestValidator>()
+                .RegisterValidatorsFromAssemblyContaining<LoginValidator>());
             services.AddSwaggerGen();
         }
 
@@ -77,15 +88,6 @@ namespace NeighborGood.API
                 app.UseDeveloperExceptionPage();
             }
 
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetRequiredService<NeighborGoodContext>();
-                if (context.Database.CanConnect())
-                {
-                    context.Database.EnsureCreated();
-                }
-            }
-
             app.UseSwagger();
             app.UseHttpsRedirection();
 
@@ -95,13 +97,22 @@ namespace NeighborGood.API
             });
 
             app.UseRouting();
-
+            app.UseCors("CORS");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<NeighborGoodContext>();
+                if (context.Database.CanConnect())
+                {
+                    context.Database.GetPendingMigrationsAsync();
+                }
+            }
         }
     }
 }

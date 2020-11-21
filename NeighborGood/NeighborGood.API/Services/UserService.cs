@@ -43,7 +43,8 @@ namespace NeighborGood.API.Services
             var user = await _userRepository.GetByEmailAcync(loginRequest.Email);
             if (user != null)
             {
-                await _signInManager.PasswordSignInAsync(loginRequest.Email, loginRequest.Password, false, false);
+               var result= await _signInManager.PasswordSignInAsync(loginRequest.Email, loginRequest.Password, false, false);
+                if(result.Succeeded)
                 return true;
             }
             return false;
