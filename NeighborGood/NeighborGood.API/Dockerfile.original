@@ -8,8 +8,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["NeighborGood.API/NeighborGood.API.csproj", "NeighborGood.API/"]
-COPY ["NeighborGood.MSSQL/NeighborGood.MSSQL.csproj", "NeighborGood.MSSQL/"]
-COPY ["NeighborGood.Models/NeighborGood.Models.csproj", "NeighborGood.Models/"]
 RUN dotnet restore "NeighborGood.API/NeighborGood.API.csproj"
 COPY . .
 WORKDIR "/src/NeighborGood.API"
