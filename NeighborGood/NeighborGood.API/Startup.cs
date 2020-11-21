@@ -39,6 +39,7 @@ namespace NeighborGood.API
 
             services.AddTransient<IUserRepository<User>, UserRepository>();
             services.AddTransient<IAnnouncementRepository<Announcement>, AnnouncementRepository>();
+
             services.AddScoped<IUserService, UserService>();
 
             services.AddAutoMapper(typeof(Startup));

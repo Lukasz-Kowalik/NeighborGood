@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using NeighborGood.API.DTOs.Responses;
 using NeighborGood.API.Services.Interfaces;
 using NeighborGood.Models.Entity;
 using NeighborGood.MSSQL.Repositories;
@@ -18,11 +17,11 @@ namespace NeighborGood.API.Services
             _mapper = mapper;
         }
 
-        public async Task<UserResponse> GetUserById(int id)
-        {
-            var user = await _userRepository.GetByIdAsync(id);
-            var response = _mapper.Map<UserResponse>(user);
-            return response;
-        }
+        //    public async Task<UserResponse> GetUserById(int id)
+        //    {
+        //        var user = await _userRepository.GetByIdAsync(id);
+        //        var response = _mapper.Map<UserResponse>(user);
+        //        return response;
+        //    }
     }
 }

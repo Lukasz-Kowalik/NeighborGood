@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NeighborGood.API.DTOs.Responses;
 using NeighborGood.API.Services.Interfaces;
 using NeighborGood.Models.Entity;
 using NeighborGood.MSSQL.Repositories;
@@ -20,19 +19,19 @@ namespace NeighborGood.API.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
-        [Route("GetUser/{id}")]
-        public async Task<IActionResult> GetUserById(int id)
-        {
-           var result =await _userService.GetUserById(id);
-            return Ok();
-        }
-        [HttpGet]
-        [Route("GetUsers")]
-        public async Task<IActionResult> GetUser()
-        {
-         //  var result = await _userService.GetUserById();
-            return Ok();
-        }
+        //[HttpGet]
+        //[Route("GetUser/{id}")]
+        //public async Task<IActionResult> GetUserById(int id)
+        //{
+        //   var result =await _userService.GetUserById(id);
+        //    return Ok();
+        //}
+        //[HttpGet]
+        //[Route("GetUsers")]
+        //public async Task<IActionResult> GetUser()
+        //{
+        // //  var result = await _userService.GetUserById();
+        //    return Ok();
+        //}
     }
 }

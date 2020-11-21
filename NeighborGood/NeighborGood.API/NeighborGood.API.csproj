@@ -24,9 +24,5 @@
     <ProjectReference Include="..\NeighborGood.MSSQL\NeighborGood.MSSQL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\Requests\" />
-  </ItemGroup>
-
 
 </Project>
