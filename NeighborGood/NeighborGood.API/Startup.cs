@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NeighborGood.API.Services;
 using NeighborGood.API.Services.Interfaces;
+using NeighborGood.API.Validation;
 using NeighborGood.Models.DTOs.Requests;
 using NeighborGood.Models.Entity;
 using NeighborGood.MSSQL;
@@ -35,7 +37,6 @@ namespace NeighborGood.API
                                       builder.AllowAnyOrigin();
                                       builder.AllowAnyMethod();
                                       builder.AllowAnyHeader();
-
                                   });
             });
             services.AddScoped<IUserService, UserService>();
@@ -72,7 +73,8 @@ namespace NeighborGood.API
             services.AddScoped<IUserService, UserService>();
 
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AnnouncementValidator>());
             services.AddSwaggerGen();
         }
 
@@ -82,15 +84,6 @@ namespace NeighborGood.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
-
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetRequiredService<NeighborGoodContext>();
-                //if (context.Database.CanConnect())
-                //{
-                    context.Database.Migrate();
-             //   }
             }
 
             app.UseSwagger();
@@ -109,6 +102,15 @@ namespace NeighborGood.API
             {
                 endpoints.MapControllers();
             });
+
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<NeighborGoodContext>();
+                if (context.Database.CanConnect())
+                {
+                    context.Database.GetPendingMigrationsAsync();
+                }
+            }
         }
     }
 }
