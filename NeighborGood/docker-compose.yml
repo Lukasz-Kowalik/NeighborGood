@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  neighborgood.api:
+    image: ${DOCKER_REGISTRY-}neighborgoodapi
+    build:
+      context: .
+      dockerfile: NeighborGood.API/Dockerfile
+    depends_on:
+        - neighborgood.database
+    ports:
+      - "5000:80"
+      - "5001:443"
+
+  neighborgood.database:
+    container_name: DataBase
+    image: mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
+    environment:
+        ACCEPT_EULA: Y
+        SA_PASSWORD: Password2020
+    ports:
+        - "1450:1433"
