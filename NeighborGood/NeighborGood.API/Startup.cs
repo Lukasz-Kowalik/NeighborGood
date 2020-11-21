@@ -1,5 +1,4 @@
 using AutoMapper;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NeighborGood.API.Services;
 using NeighborGood.API.Services.Interfaces;
-using NeighborGood.API.Validation;
 using NeighborGood.Models.DTOs.Requests;
 using NeighborGood.Models.Entity;
 using NeighborGood.MSSQL;
@@ -74,9 +72,8 @@ namespace NeighborGood.API
             services.AddScoped<IUserService, UserService>();
 
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllers()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterUserRequestValidator>()
-                .RegisterValidatorsFromAssemblyContaining<LoginValidator>());
+            services.AddControllers();
+
             services.AddSwaggerGen();
         }
 
