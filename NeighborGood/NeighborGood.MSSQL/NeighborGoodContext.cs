@@ -19,8 +19,19 @@ namespace NeighborGood.MSSQL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Seed();
             modelBuilder.Entity<Announcement>().ToTable("Announcements");
+            modelBuilder.Entity<Announcement>(entity =>
+            {
+                entity.HasOne(e => e.User);
+            });
             modelBuilder.Entity<User>().ToTable("Users");
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasMany(e => e.Announcements);
+            });
+
             modelBuilder.Entity<Tag>().ToTable("Tags");
             modelBuilder.Entity<Localization>();
         }

@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NeighborGood.Models.Entity;
 using NeighborGood.MSSQL.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NeighborGood.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AnnouncementController: ControllerBase
+    public class AnnouncementController : ControllerBase
     {
         private readonly AnnouncementRepository _repository;
 
@@ -19,7 +17,7 @@ namespace NeighborGood.API.Controllers
             _repository = (AnnouncementRepository)repository;
         }
 
-        [HttpGet("")]
+        [HttpGet]
         public async Task<IEnumerable<Announcement>> GetAllAnnouncements()
         {
             var announcements = await _repository.GetAllAsync();
@@ -31,6 +29,19 @@ namespace NeighborGood.API.Controllers
         {
             var announcement = await _repository.GetByIdAsync(id);
             return announcement;
+        }
+
+        [HttpPost]
+        public async Task<int> CreateAnnouncement(Announcement announcement)
+        {
+            var id = await _repository.CreateAsync(announcement);
+            return id;
+        }
+
+        [HttpDelete("{id}")]
+        public async Task DeleteAnnouncement(int id)
+        {
+            await _repository.DeleteByIdAsync(id);
         }
     }
 }
