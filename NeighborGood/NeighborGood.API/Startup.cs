@@ -58,7 +58,10 @@ namespace NeighborGood.API
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<NeighborGoodContext>();
-                context.Database.EnsureCreated();
+                if (context.Database.CanConnect())
+                {
+                    context.Database.EnsureCreated();
+                }
             }
 
             app.UseSwagger();
