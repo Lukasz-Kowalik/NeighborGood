@@ -1,12 +1,14 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NeighborGood.API.Services;
 using NeighborGood.API.Services.Interfaces;
+using NeighborGood.Models.Entity;
 using NeighborGood.MSSQL;
 
 namespace NeighborGood.API
@@ -24,8 +26,15 @@ namespace NeighborGood.API
         public void ConfigureServices(IServiceCollection services)
         {
            
-            services.AddDbContext<NeighborGoodContext>(opts => opts.UseSqlServer(Configuration["DataBaseConnectionString"])
-                                                                 .UseLazyLoadingProxies());
+            //services.AddDbContext<NeighborGoodContext>(opts => opts.UseSqlServer(Configuration["DataBaseConnectionString"])
+            //                                                     .UseLazyLoadingProxies());
+
+            services.AddIdentity<User,IdentityRole>()
+               .AddUserManager<UserManager<User>>()
+               .AddSignInManager<SignInManager<User>>()
+               .AddEntityFrameworkStores<NeighborGoodContext>()
+               .AddDefaultTokenProviders();
+
             services.AddScoped<IUserService,UserService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();

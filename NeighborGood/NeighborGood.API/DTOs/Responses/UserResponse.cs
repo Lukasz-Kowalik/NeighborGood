@@ -7,5 +7,6 @@ namespace NeighborGood.API.DTOs.Responses
 {
     public class UserResponse
     {
+
     }
 }
