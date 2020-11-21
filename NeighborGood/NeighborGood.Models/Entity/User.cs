@@ -9,7 +9,6 @@ namespace NeighborGood.Models.Entity
     {
         public string Name { get; set; }
         public decimal Rate { get; set; }
-        public string PhoneNumber { get; set; }
         public UserTypes UserType { get; set; }
         public virtual List<Announcement> Announcements { get; set; }
     }

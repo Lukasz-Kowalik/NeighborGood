@@ -26,20 +26,17 @@ namespace NeighborGood.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
-            //services.AddDbContext<NeighborGoodContext>(opts => opts.UseSqlServer(Configuration["DataBaseConnectionString"])
-            //                                                     .UseLazyLoadingProxies());
+            services.AddScoped<IUserService, UserService>();
+            services.AddDbContext<NeighborGoodContext>(opts => opts.UseSqlServer(Configuration["DataBaseConnectionString"])
+                                                                 .UseLazyLoadingProxies());
 
-            services.AddIdentity<User,IdentityRole>()
+            services.AddIdentity<User, Role>()
                .AddUserManager<UserManager<User>>()
+               .AddRoleManager<RoleManager<Role>>()
                .AddSignInManager<SignInManager<User>>()
                .AddEntityFrameworkStores<NeighborGoodContext>()
                .AddDefaultTokenProviders();
 
-            services.AddScoped<IUserService,UserService>();
-            services.AddDbContext<NeighborGoodContext>(opts => opts.UseSqlServer(Configuration["DataBaseConnectionString"])
-                                                                 .UseLazyLoadingProxies());
-            
             services.AddTransient<IUserRepository<User>, UserRepository>();
             services.AddTransient<IAnnouncementRepository<Announcement>, AnnouncementRepository>();
             services.AddScoped<IUserService, UserService>();
