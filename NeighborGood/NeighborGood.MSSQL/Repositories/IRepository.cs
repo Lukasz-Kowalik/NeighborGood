@@ -1,4 +1,5 @@
-﻿using NeighborGood.Models.Base;
+﻿using Microsoft.AspNetCore.Identity;
+using NeighborGood.Models.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NeighborGood.MSSQL.Repositories
 {
-    public interface IRepository<T> where T : BaseModel
+    public interface IRepository<T> where T : IdentityUser<int>  
     {
         Task<int> CreateAsync(T entity);
 
