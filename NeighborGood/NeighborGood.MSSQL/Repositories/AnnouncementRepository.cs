@@ -42,7 +42,7 @@ namespace NeighborGood.MSSQL.Repositories
 
         public async Task<Announcement> GetByIdAsync(int id)
         {
-            var announcement = await _dbContext.Announcements.FirstAsync(x => x.Id == id);
+            var announcement = await _dbContext.Announcements.FirstOrDefaultAsync(x => x.Id == id);
             return announcement;
         }
 

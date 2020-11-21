@@ -19,11 +19,18 @@ namespace NeighborGood.API.Controllers
             _repository = (AnnouncementRepository)repository;
         }
 
-        [HttpGet("Announcement/{id}")]
-        public async Task<IEnumerable<Announcement>> GetAnnouncement()
+        [HttpGet("")]
+        public async Task<IEnumerable<Announcement>> GetAllAnnouncements()
         {
             var announcements = await _repository.GetAllAsync();
             return announcements;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<Announcement> GetAnnouncement(int id)
+        {
+            var announcement = await _repository.GetByIdAsync(id);
+            return announcement;
         }
     }
 }
