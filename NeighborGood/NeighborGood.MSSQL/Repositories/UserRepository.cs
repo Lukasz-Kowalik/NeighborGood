@@ -2,51 +2,55 @@
 using NeighborGood.Models.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NeighborGood.MSSQL.Repositories
 {
     public class UserRepository : IUserRepository<User>
     {
-        protected NeighborGoodContext _dbContect;
+        protected NeighborGoodContext _dbContext;
 
         public UserRepository(NeighborGoodContext dbcontext)
         {
-            _dbContect = dbcontext;
+            _dbContext = dbcontext;
         }
 
         public async Task<int> CreateAsync(User entity)
         {
-            var created = await _dbContect.Users.AddAsync(entity);
-            await _dbContect.SaveChangesAsync();
-            return created.Entity.Id;
+            var user = await _dbContext.Users.AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
+            return user.Entity.Id;
         }
 
         public async Task DeleteAsync(User entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Users.Remove(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            _dbContext.Remove(await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id));
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<List<User>> GetAllAsync()
         {
-            var users = await _dbContect.Users.ToListAsync();
+            var users = await _dbContext.Users.ToListAsync();
             return users;
         }
 
         public async Task<User> GetByIdAsync(int id)
         {
-            var user =await _dbContect.Users.FirstAsync(x=>x.Id==id);
+            var user = await _dbContext.Users.FirstAsync(x=>x.Id==id);
             return user;
         }
 
         public async Task UpdateAsync(User entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Users.Update(entity);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

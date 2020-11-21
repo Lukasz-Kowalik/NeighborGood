@@ -1,41 +1,55 @@
-﻿using NeighborGood.Models.Entity;
+﻿using Microsoft.EntityFrameworkCore;
+using NeighborGood.Models.Entity;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NeighborGood.MSSQL.Repositories
 {
     public class AnnouncementRepository : IAnnouncementRepository<Announcement>
     {
-        public Task<int> CreateAsync(Announcement entity)
+        protected NeighborGoodContext _dbContext;
+
+        public AnnouncementRepository(NeighborGoodContext dbcontext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbcontext;
         }
 
-        public Task DeleteAsync(Announcement entity)
+        public async Task<int> CreateAsync(Announcement entity)
         {
-            throw new NotImplementedException();
+            var announcement = await _dbContext.Announcements.AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
+            return announcement.Entity.Id;
         }
 
-        public Task DeleteByIdAsync(int id)
+        public async Task DeleteAsync(Announcement entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Announcements.Remove(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<Announcement>> GetAllAsync()
+        public async Task DeleteByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            _dbContext.Remove(await _dbContext.Announcements.FirstOrDefaultAsync(x => x.Id == id));
+            await _dbContext.SaveChangesAsync();
         }
 
-        public Task<Announcement> GetByIdAsync(int id)
+        public async Task<IEnumerable<Announcement>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var announcements = await _dbContext.Announcements.ToListAsync();
+            return announcements;
         }
 
-        public Task UpdateAsync(Announcement entity)
+        public async Task<Announcement> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var announcement = await _dbContext.Announcements.FirstAsync(x => x.Id == id);
+            return announcement;
+        }
+
+        public async Task UpdateAsync(Announcement entity)
+        {
+            _dbContext.Announcements.Update(entity);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
