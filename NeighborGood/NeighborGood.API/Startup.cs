@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NeighborGood.API.Services;
 using NeighborGood.API.Services.Interfaces;
+using NeighborGood.Models.DTOs.Requests;
 using NeighborGood.Models.Entity;
 using NeighborGood.MSSQL;
 using NeighborGood.MSSQL.Repositories;
@@ -59,7 +60,7 @@ namespace NeighborGood.API
             });
 
             services.AddTransient<IUserRepository<User>, UserRepository>();
-            services.AddTransient<IAnnouncementRepository<Announcement>, AnnouncementRepository>();
+            services.AddTransient<IAnnouncementRepository<Announcement,AnnouncementFilter>, AnnouncementRepository>();
 
             services.AddScoped<IUserService, UserService>();
 

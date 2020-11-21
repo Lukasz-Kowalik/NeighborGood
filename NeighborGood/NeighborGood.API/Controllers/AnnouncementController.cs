@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NeighborGood.Models.DTOs.Requests;
 using NeighborGood.Models.Entity;
 using NeighborGood.MSSQL.Repositories;
 using System.Collections.Generic;
@@ -12,12 +13,19 @@ namespace NeighborGood.API.Controllers
     {
         private readonly AnnouncementRepository _repository;
 
-        public AnnouncementController(IAnnouncementRepository<Announcement> repository)
+        public AnnouncementController(IAnnouncementRepository<Announcement,AnnouncementFilter> repository)
         {
             _repository = (AnnouncementRepository)repository;
         }
 
-        [HttpGet]
+        [HttpGet("filtered")]
+        public async Task<IEnumerable<Announcement>> GetFiltered(AnnouncementFilter filter)
+        {
+            var announcements = await _repository.GetFilteredAnnouncements(filter);
+            return announcements;
+        }
+
+        [HttpGet("all")]
         public async Task<IEnumerable<Announcement>> GetAllAnnouncements()
         {
             var announcements = await _repository.GetAllAsync();
@@ -43,5 +51,7 @@ namespace NeighborGood.API.Controllers
         {
             await _repository.DeleteByIdAsync(id);
         }
+
+        
     }
 }
