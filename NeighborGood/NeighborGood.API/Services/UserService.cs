@@ -27,7 +27,7 @@ namespace NeighborGood.API.Services
         public async Task<bool> RegisterUserAsync(RegisterUserRequest registerUser)
         {
             var user = _mapper.Map<User>(registerUser);
-
+            user.UserName = user.Name;
             var result = await _userManager.CreateAsync(user, registerUser.Password);
 
             if (result.Succeeded)

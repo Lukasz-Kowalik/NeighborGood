@@ -11,6 +11,9 @@ using NeighborGood.API.Services.Interfaces;
 using NeighborGood.Models.Entity;
 using NeighborGood.MSSQL;
 using NeighborGood.MSSQL.Repositories;
+using Newtonsoft;
+using System;
+using System.Text.Json;
 
 namespace NeighborGood.API
 {
@@ -28,11 +31,7 @@ namespace NeighborGood.API
         {
             services.AddScoped<IUserService, UserService>();
 
-            services.AddControllersWithViews()
-                .AddNewtonsoftJson(options =>
-                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-                );
-
+            
             services.AddDbContext<NeighborGoodContext>(opts => opts.UseSqlServer(Configuration["DataBaseConnectionString"])
                                                                  .UseLazyLoadingProxies());
 
@@ -42,6 +41,22 @@ namespace NeighborGood.API
                .AddSignInManager<SignInManager<User>>()
                .AddEntityFrameworkStores<NeighborGoodContext>()
                .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 1;
+                options.Password.RequiredUniqueChars = 0;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = false;
+            });
 
             services.AddTransient<IUserRepository<User>, UserRepository>();
             services.AddTransient<IAnnouncementRepository<Announcement>, AnnouncementRepository>();

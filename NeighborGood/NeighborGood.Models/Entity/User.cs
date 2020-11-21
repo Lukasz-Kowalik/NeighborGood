@@ -7,6 +7,10 @@ namespace NeighborGood.Models.Entity
 {
     public class User : IdentityUser<int>
     {
+        public User()
+        {
+            Announcements = new List<Announcement>();
+        }
         public string Name { get; set; }
         public decimal Rate { get; set; }
         public UserTypes UserType { get; set; }

@@ -28,7 +28,7 @@ namespace NeighborGood.API.Controllers
         }
 
         [HttpPost]
-        [Route("Register")]
+        [Route("Login")]
         public async Task<IActionResult> Login(LoginRequest request)
         {
             var result = await _userService.LoginAsync(request);

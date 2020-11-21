@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NeighborGood.API.DTOs.Requests;
 using NeighborGood.Models.Entity;
 
 namespace NeighborGood.API.Mapping
@@ -7,8 +8,7 @@ namespace NeighborGood.API.Mapping
     {
         public MappingConfiguration()
         {
-            //CreateMap<User, UserResponse>();
+            CreateMap<RegisterUserRequest, User>();
         }
-        
     }
 }

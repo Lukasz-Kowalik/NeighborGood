@@ -10,8 +10,8 @@ using NeighborGood.MSSQL;
 namespace NeighborGood.MSSQL.Migrations
 {
     [DbContext(typeof(NeighborGoodContext))]
-    [Migration("20201121040525_AddedDependency")]
-    partial class AddedDependency
+    [Migration("20201121073803_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -147,7 +147,7 @@ namespace NeighborGood.MSSQL.Migrations
                     b.Property<int>("PublishingType")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -361,7 +361,9 @@ namespace NeighborGood.MSSQL.Migrations
 
                     b.HasOne("NeighborGood.Models.Entity.User", "User")
                         .WithMany("Announcements")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Localization");
 

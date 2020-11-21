@@ -145,7 +145,7 @@ namespace NeighborGood.MSSQL.Migrations
                     b.Property<int>("PublishingType")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -359,7 +359,9 @@ namespace NeighborGood.MSSQL.Migrations
 
                     b.HasOne("NeighborGood.Models.Entity.User", "User")
                         .WithMany("Announcements")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Localization");
 
