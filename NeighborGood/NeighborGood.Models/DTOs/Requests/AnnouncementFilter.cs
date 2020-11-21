@@ -19,5 +19,6 @@ namespace NeighborGood.Models.DTOs.Requests
         public PublishingTypes PublishingType { get; set; }
         public virtual List<Tag> Tags { get; set; }
         public virtual Localization Localization { get; set; }
+
     }
 }

@@ -31,7 +31,7 @@ namespace NeighborGood.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
-
+            services.AddScoped<GeoLocation>();
             
             services.AddDbContext<NeighborGoodContext>(opts => opts.UseSqlServer(Configuration["DataBaseConnectionString"])
                                                                  .UseLazyLoadingProxies());
