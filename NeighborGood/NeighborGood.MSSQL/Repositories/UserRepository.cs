@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NeighborGood.Models.Entity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,7 +42,7 @@ namespace NeighborGood.MSSQL.Repositories
 
         public async Task<User> GetByIdAsync(int id)
         {
-            var user = await _dbContext.Users.FirstAsync(x=>x.Id==id);
+            var user = await _dbContext.Users.FirstAsync(x => x.Id == id);
             return user;
         }
 
@@ -51,6 +50,12 @@ namespace NeighborGood.MSSQL.Repositories
         {
             _dbContext.Users.Update(entity);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<User> GetByEmailAcync(string email)
+        {
+            var user =await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+            return user;
         }
     }
 }
