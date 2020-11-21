@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using NeighborGood.Models.DTOs.Requests;
 using NeighborGood.Models.Entity;
 using NeighborGood.MSSQL.Repositories;
@@ -12,10 +13,12 @@ namespace NeighborGood.API.Controllers
     public class AnnouncementController : ControllerBase
     {
         private readonly AnnouncementRepository _repository;
+        private readonly UserManager<User> _userManager;
 
-        public AnnouncementController(IAnnouncementRepository<UserRegisterRequest,AnnouncementFilter> repository)
+        public AnnouncementController(UserManager<User> userManager ,IAnnouncementRepository<UserRegisterRequest,AnnouncementFilter> repository)
         {
             _repository = (AnnouncementRepository)repository;
+            _userManager = userManager;
         }
 
         [HttpGet("filtered")]
@@ -42,6 +45,8 @@ namespace NeighborGood.API.Controllers
         [HttpPost]
         public async Task<int> CreateAnnouncement(UserRegisterRequest announcement)
         {
+            var user = await _userManager.GetUserAsync(User);
+            announcement.UserId = user.Id;
             var id = await _repository.CreateAsync(announcement);
             return id;
         }
