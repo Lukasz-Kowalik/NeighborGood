@@ -8,6 +8,9 @@ namespace NeighborGood.MSSQL
     public class NeighborGoodContext : IdentityDbContext<User, Role, int>
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<Localization> Localizations { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
 
         public NeighborGoodContext(DbContextOptions<NeighborGoodContext> options)
@@ -16,6 +19,14 @@ namespace NeighborGood.MSSQL
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+           
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Announcement>().ToTable("Announcements");
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Tag>().ToTable("Tags");
+            modelBuilder.Entity<Localization>();
             base.OnModelCreating(builder);
         }
     }

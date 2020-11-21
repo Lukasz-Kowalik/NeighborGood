@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using NeighborGood.Models.Base;
-using System;
+using NeighborGood.Models.Enums.Announcements;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NeighborGood.Models.Entity
 {
@@ -10,5 +9,8 @@ namespace NeighborGood.Models.Entity
     {
         public string Name { get; set; }
         public decimal Rate { get; set; }
+        public string PhoneNumber { get; set; }
+        public UserTypes UserType { get; set; }
+        public virtual List<Announcement> Announcements { get; set; }
     }
 }
