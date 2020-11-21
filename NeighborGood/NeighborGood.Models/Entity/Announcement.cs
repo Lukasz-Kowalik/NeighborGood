@@ -13,6 +13,7 @@ namespace NeighborGood.Models.Entity
 
         public virtual User User { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         public decimal Price { get; set; }
         public AnnouncementTypes AnnouncementType { get; set; }
         public PublishingTypes PublishingType { get; set; }

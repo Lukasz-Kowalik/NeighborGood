@@ -130,6 +130,9 @@ namespace NeighborGood.MSSQL.Migrations
                     b.Property<int>("AnnouncementType")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("LocalizationId")
                         .HasColumnType("int");
 
