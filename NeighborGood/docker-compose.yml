@@ -19,4 +19,4 @@ services:
         ACCEPT_EULA: Y
         SA_PASSWORD: Password2020
     ports:
-        - "1450:1433"
+        - "1433:1433"
