@@ -9,11 +9,11 @@ namespace NeighborGood.Models.Entity
     {
         public User()
         {
-            Announcements = new List<Announcement>();
+            Announcements = new List<UserRegisterRequest>();
         }
         public string Name { get; set; }
         public decimal Rate { get; set; }
         public UserTypes UserType { get; set; }
-        public virtual List<Announcement> Announcements { get; set; }
+        public virtual List<UserRegisterRequest> Announcements { get; set; }
     }
 }

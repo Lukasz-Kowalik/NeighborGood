@@ -7,7 +7,7 @@ namespace NeighborGood.MSSQL
     public class NeighborGoodContext : IdentityDbContext<User, Role, int>
     {
         public DbSet<User> Users { get; set; }
-        public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<UserRegisterRequest> Announcements { get; set; }
         public DbSet<Localization> Localizations { get; set; }
         public DbSet<Tag> Tags { get; set; }
 
@@ -20,8 +20,8 @@ namespace NeighborGood.MSSQL
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Seed();
-            modelBuilder.Entity<Announcement>().ToTable("Announcements");
-            modelBuilder.Entity<Announcement>(entity =>
+            modelBuilder.Entity<UserRegisterRequest>().ToTable("Announcements");
+            modelBuilder.Entity<UserRegisterRequest>(entity =>
             {
                 entity.HasOne(e => e.User);
             });

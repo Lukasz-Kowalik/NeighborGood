@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NeighborGood.MSSQL.Repositories
 {
-    public class AnnouncementRepository : IAnnouncementRepository<Announcement,AnnouncementFilter>
+    public class AnnouncementRepository : IAnnouncementRepository<UserRegisterRequest,AnnouncementFilter>
     {
         protected NeighborGoodContext _dbContext;
 
@@ -18,14 +18,14 @@ namespace NeighborGood.MSSQL.Repositories
             _dbContext = dbcontext;
         }
 
-        public async Task<int> CreateAsync(Announcement entity)
+        public async Task<int> CreateAsync(UserRegisterRequest entity)
         {
             var announcement = await _dbContext.Announcements.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
             return announcement.Entity.Id;
         }
 
-        public async Task DeleteAsync(Announcement entity)
+        public async Task DeleteAsync(UserRegisterRequest entity)
         {
             _dbContext.Announcements.Remove(entity);
             await _dbContext.SaveChangesAsync();
@@ -37,30 +37,30 @@ namespace NeighborGood.MSSQL.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Announcement>> GetAllAsync()
+        public async Task<IEnumerable<UserRegisterRequest>> GetAllAsync()
         {
             var announcements = await _dbContext.Announcements.ToListAsync();
             return announcements;
         }
 
-        public async Task<Announcement> GetByIdAsync(int id)
+        public async Task<UserRegisterRequest> GetByIdAsync(int id)
         {
             var announcement = await _dbContext.Announcements.FirstOrDefaultAsync(x => x.Id == id);
             return announcement;
         }
 
-        public async Task UpdateAsync(Announcement entity)
+        public async Task UpdateAsync(UserRegisterRequest entity)
         {
             _dbContext.Announcements.Update(entity);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Announcement>> GetFilteredAnnouncements(AnnouncementFilter filter)
+        public async Task<IEnumerable<UserRegisterRequest>> GetFilteredAnnouncements(AnnouncementFilter filter)
         {
             if (filter.PriceUp <= filter.PriceDown)
                 filter.PriceUp = decimal.MaxValue;
 
-            var filteredAnnouncements = new List<Announcement>();
+            var filteredAnnouncements = new List<UserRegisterRequest>();
             var filtered = await _dbContext.Announcements.Where(x => x.Name == filter.Name
                 || ((x.Price >= filter.PriceDown && x.Price <= filter.PriceUp))
                 || x.AnnouncementType == filter.AnnouncementType

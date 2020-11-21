@@ -68,13 +68,14 @@ namespace NeighborGood.API
             });
 
             services.AddTransient<IUserRepository<User>, UserRepository>();
-            services.AddTransient<IAnnouncementRepository<Announcement, AnnouncementFilter>, AnnouncementRepository>();
+            services.AddTransient<IAnnouncementRepository<UserRegisterRequest, AnnouncementFilter>, AnnouncementRepository>();
 
             services.AddScoped<IUserService, UserService>();
 
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AnnouncementValidator>());
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterUserRequestValidator>()
+                .RegisterValidatorsFromAssemblyContaining<LoginValidator>());
             services.AddSwaggerGen();
         }
 

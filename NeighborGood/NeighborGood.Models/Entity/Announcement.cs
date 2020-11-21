@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace NeighborGood.Models.Entity
 {
-    public class Announcement : BaseModel
+    public class UserRegisterRequest : BaseModel
     {
-        public Announcement()
+        public UserRegisterRequest()
         {
             Tags = new List<Tag>();
         }

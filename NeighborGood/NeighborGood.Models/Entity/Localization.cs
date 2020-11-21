@@ -6,5 +6,6 @@ namespace NeighborGood.Models.Entity
     {
         public string XCoordination { get; set; }
         public string YCoordination { get; set; }
+        public string Addresess { get; set; }
     }
 }
