@@ -7,7 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NeighborGood.API.Services;
 using NeighborGood.API.Services.Interfaces;
+using NeighborGood.Models.Entity;
 using NeighborGood.MSSQL;
+using NeighborGood.MSSQL.Repositories;
 
 namespace NeighborGood.API
 {
@@ -23,10 +25,13 @@ namespace NeighborGood.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
             services.AddDbContext<NeighborGoodContext>(opts => opts.UseSqlServer(Configuration["DataBaseConnectionString"])
                                                                  .UseLazyLoadingProxies());
-            services.AddScoped<IUserService,UserService>();
+            
+            services.AddTransient<IUserRepository<User>, UserRepository>();
+            services.AddTransient<IAnnouncementRepository<Announcement>, AnnouncementRepository>();
+            services.AddScoped<IUserService, UserService>();
+
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
             services.AddSwaggerGen();
@@ -39,6 +44,13 @@ namespace NeighborGood.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<NeighborGoodContext>();
+                context.Database.EnsureCreated();
+            }
+
             app.UseSwagger();
             app.UseHttpsRedirection();
 

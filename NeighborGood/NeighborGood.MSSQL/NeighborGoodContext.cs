@@ -12,6 +12,14 @@ namespace NeighborGood.MSSQL
 
         public NeighborGoodContext(DbContextOptions options) : base(options)
         {
+           
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Announcement>().ToTable("Announcements");
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Tag>().ToTable("Tags");
+            modelBuilder.Entity<Localization>();
         }
     }
 }
